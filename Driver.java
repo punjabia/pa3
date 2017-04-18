@@ -11,4 +11,6 @@ public class Driver {
 		KK part = new KK(list);
 		System.out.println(part.residue(part.heap));
 	}
+
+	
 }
