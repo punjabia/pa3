@@ -7,19 +7,89 @@ public class KK {
 	public static void main(String[] args) {
 		long[] list = new long[100];
 		Random rnd = new Random();
+		long[][] results = new long[7][100];
+		long[][] times = new long[7][100];
+		long startTime;
+		long endTime;
 
-		for (int i = 0; i < 100; i++) {
-			list[i] = Math.abs(rnd.nextLong());
+		for (int runs = 0; runs < 100; runs++) {
+			for (int i = 0; i < 100; i++) {
+				list[i] = Math.abs(rnd.nextLong());
+			}
+			System.out.println(runs);
+			startTime = System.currentTimeMillis();
+			results[0][runs] = residue(list);
+			endTime   = System.currentTimeMillis();
+			times[0][runs] = endTime - startTime;
+			startTime = System.currentTimeMillis();
+			results[1][runs] = repRandStandard(list);
+			endTime   = System.currentTimeMillis();
+			times[1][runs] = endTime - startTime;
+			startTime = System.currentTimeMillis();
+			results[2][runs] = repRandPrePart(list);
+			endTime   = System.currentTimeMillis();
+			times[2][runs] = endTime - startTime;
+			startTime = System.currentTimeMillis();
+			results[3][runs] = hillClimbStandard(list);
+			endTime   = System.currentTimeMillis();
+			times[3][runs] = endTime - startTime;
+			startTime = System.currentTimeMillis();
+			results[4][runs] = hillClimbPrePart(list);
+			endTime   = System.currentTimeMillis();
+			times[4][runs] = endTime - startTime;
+			startTime = System.currentTimeMillis();
+			results[5][runs] = simAnnealStandard(list);
+			endTime   = System.currentTimeMillis();
+			times[5][runs] = endTime - startTime;
+			startTime = System.currentTimeMillis();
+			results[6][runs] = simAnnealPrePart(list);
+			endTime   = System.currentTimeMillis();
+			times[6][runs] = endTime - startTime;
+			// System.out.println("Karmarkar-Karp Residue: \t\t\t\t\t" + residue(list));
+			// System.out.println("Repeated Random Standard Solution Representation:\t\t" + repRandStandard(list));
+			// System.out.println("Repeated Random Prepartition Solution Representation: \t\t" + repRandPrePart(list));
+			// System.out.println("Hill Climbing Standard Solution Representation: \t\t" + hillClimbStandard(list));
+			// System.out.println("Hill Climbing Prepartition Solution Representation: \t\t" + hillClimbPrePart(list));
+			// System.out.println("Simulated Annealing Standard Solution Representation: \t\t" + simAnnealStandard(list));
+			// System.out.println("Simulated Annealing Prepartition Solution Representation: \t" + simAnnealPrePart(list));
+		
 		}
-		System.out.println("Karmarkar-Karp Residue: \t\t\t\t\t" + residue(list));
-		System.out.println("Repeated Random Standard Solution Representation:\t\t" + repRandStandard(list));
-		System.out.println("Repeated Random Prepartition Solution Representation: \t\t" + repRandPrePart(list));
-		System.out.println("Hill Climbing Standard Solution Representation: \t\t" + hillClimbStandard(list));
-		System.out.println("Hill Climbing Prepartition Solution Representation: \t\t" + hillClimbPrePart(list));
-		System.out.println("Simulated Annealing Standard Solution Representation: \t\t" + simAnnealStandard(list));
-		System.out.println("Simulated Annealing Prepartition Solution Representation: \t" + simAnnealPrePart(list));
-		
-		
+
+		System.out.println("Karmarkar-Karp Residue:");
+		printResults(results[0]);
+		System.out.println("Times:");
+		printResults(times[0]);
+		System.out.println("Repeated Random Standard Solution Representation:");
+		printResults(results[1]);
+		System.out.println("Times:");
+		printResults(times[1]);
+		System.out.println("Repeated Random Prepartition Solution Representation:");
+		printResults(results[2]);
+		System.out.println("Times:");
+		printResults(times[2]);
+		System.out.println("Hill Climbing Standard Solution Representation:");
+		printResults(results[3]);
+		System.out.println("Times:");
+		printResults(times[3]);
+		System.out.println("Hill Climbing Prepartition Solution Representation:");
+		printResults(results[4]);
+		System.out.println("Times:");
+		printResults(times[4]);
+		System.out.println("Simulated Annealing Standard Solution Representation:");
+		printResults(results[5]);
+		System.out.println("Times:");
+		printResults(times[5]);
+		System.out.println("Simulated Annealing Prepartition Solution Representation:");
+		printResults(results[6]);
+		System.out.println("Times:");
+		printResults(times[6]);
+	}
+
+
+	public static void printResults(long[] list) {
+		for (int i = 0; i < list.length; i++) {
+			System.out.println(list[i]);
+		}
 	}
 
 	public static long[] maxHeapify(long[] list, int index) {
@@ -154,7 +224,7 @@ public class KK {
 			}
 			new_res = 0;
 			for (int k = 0; k < nums.length; k++) {
-				new_res += (2*state[i] - 1) * nums[i];
+				new_res += (2*state[k] - 1) * nums[k];
 			}
 			new_res = Math.abs(new_res);
 			if (new_res < best_res) {
